@@ -245,7 +245,7 @@ OCV_OPTION(BUILD_ITT                "Build Intel ITT from source"
     (NOT MINGW OR OPENCV_FORCE_3RDPARTY_BUILD)
     IF (X86_64 OR X86 OR ARM OR AARCH64 OR PPC64 OR PPC64LE) AND NOT WINRT AND NOT APPLE_FRAMEWORK
 )
-
+OCV_OPTION(BUILD_CSI_CV             "Build csi-cv from source" OFF)
 # Optional 3rd party components
 # ===================================================
 OCV_OPTION(WITH_1394 "Include IEEE1394 support" ON
@@ -987,6 +987,13 @@ if(WITH_CAROTENE)
   endif()
 endif()
 
+if(BUILD_CSI_CV)
+    ocv_debug_message(STATUS "Enable csi-cv acceleration")
+  if(NOT ";${OpenCV_HAL};" MATCHES ";csi-cv;")
+    set(OpenCV_HAL "csi-cv;${OpenCV_HAL}")
+  endif()
+endif()
+
 if(WITH_NDSRVP)
   ocv_debug_message(STATUS "Andes RVP 3rdparty NDSRVP enabled")
   if(NOT ";${OpenCV_HAL};" MATCHES ";ndsrvp;")
@@ -1027,6 +1034,10 @@ foreach(hal ${OpenCV_HAL})
     add_subdirectory(3rdparty/openvx)
     ocv_hal_register(OPENVX_HAL_LIBRARIES OPENVX_HAL_HEADERS OPENVX_HAL_INCLUDE_DIRS)
     list(APPEND OpenCV_USED_HAL "openvx (ver ${OPENVX_HAL_VERSION})")
+  elseif(hal STREQUAL "csi-cv")
+    add_subdirectory(3rdparty/csi-cv/interface/opencv)
+    ocv_hal_register(CSI_CV_HAL_LIBRARIES CSI_CV_HAL_HEADERS CSI_CV_HAL_INCLUDE_DIRS)
+    list(APPEND OpenCV_USED_HAL "csi-cv (ver ${CSI_CV_HAL_VERSION})")
   else()
     ocv_debug_message(STATUS "OpenCV HAL: ${hal} ...")
     ocv_clear_vars(OpenCV_HAL_LIBRARIES OpenCV_HAL_HEADERS OpenCV_HAL_INCLUDE_DIRS)
