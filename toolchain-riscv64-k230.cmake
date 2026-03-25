@@ -1,0 +1,164 @@
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR riscv64)
+
+set(CMAKE_C_COMPILER riscv64-unknown-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER riscv64-unknown-linux-gnu-g++)
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+# K230特定优化参数
+set(CMAKE_C_FLAGS "-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g0 -D_FORTIFY_SOURCE=1 -mcpu=c908v -mabi=lp64d -mtune=c908 -mrvv-v0p10-compatible -mrvv-auto-vectorize")
+set(CMAKE_CXX_FLAGS "-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g0 -D_FORTIFY_SOURCE=1 -mcpu=c908v -mabi=lp64d -mtune=c908 -mrvv-v0p10-compatible -mrvv-auto-vectorize")
+
+set(BUILD_CSI_CV ON)
+set(CORE "C908V")
+set(CV_ENABLE_INTRINSICS OFF)
+
+# 基础功能模块（必须开启）
+set(BUILD_opencv_core ON)
+set(BUILD_opencv_imgproc ON)
+set(BUILD_opencv_imgcodecs ON)
+set(BUILD_opencv_videoio ON)
+set(BUILD_opencv_highgui ON)
+
+# 扩展功能模块
+set(BUILD_opencv_video ON)
+set(BUILD_opencv_calib3d ON)
+set(BUILD_opencv_features2d ON)
+set(BUILD_opencv_flann ON)
+set(BUILD_opencv_ml ON)
+set(BUILD_opencv_objdetect ON)
+set(BUILD_opencv_dnn ON)
+set(BUILD_opencv_photo ON)
+set(BUILD_opencv_stitching ON)
+
+# 工具和测试配置（编译时关闭，减小体积）
+set(BUILD_opencv_apps OFF)
+set(BUILD_opencv_ts OFF)
+set(BUILD_DOCS OFF)
+set(BUILD_EXAMPLES OFF)
+set(BUILD_TESTS OFF)
+set(BUILD_PERF_TESTS OFF)
+set(BUILD_WITH_DEBUG_INFO OFF)
+set(DOWNLOAD_EXTERNAL_TEST_DATA OFF)
+set(INSTALL_TEST OFF)
+
+# 特殊构建模式（关闭）
+set(BUILD_opencv_world OFF)
+set(BUILD_opencv_gapi OFF)
+
+# 构建和安装选项
+set(OPENCV_GENERATE_PKGCONFIG ON)
+set(OPENCV_ENABLE_PKG_CONFIG ON)
+set(BUILD_WITH_STATIC_CRT OFF)
+set(BUILD_PACKAGE OFF)
+
+# 编译器优化选项
+set(ENABLE_CCACHE OFF)
+set(ENABLE_COVERAGE OFF)
+set(ENABLE_FAST_MATH ON)
+set(ENABLE_IMPL_COLLECTION OFF)
+set(ENABLE_NOISY_WARNINGS OFF)
+set(ENABLE_OMIT_FRAME_POINTER ON)
+set(ENABLE_PRECOMPILED_HEADERS OFF)
+set(ENABLE_PROFILING OFF)
+set(OPENCV_WARNINGS_ARE_ERRORS OFF)
+
+# 链接选项
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH OFF)
+set(CMAKE_SKIP_RPATH OFF)
+set(CMAKE_USE_RELATIVE_PATHS OFF)
+
+# 硬件平台支持（K230 为 RISC-V，关闭其他架构）
+set(ENABLE_POWERPC OFF)
+set(ENABLE_NEON OFF)
+set(ENABLE_VFPV3 OFF)
+
+# GPU 和专用加速库（K230 无 GPU，全部关闭）
+set(WITH_CUDA OFF)
+set(WITH_CUBLAS OFF)
+set(WITH_CUFFT OFF)
+set(WITH_NVCUVID OFF)
+set(WITH_OPENCL OFF)
+set(WITH_OPENCLAMDBLAS OFF)
+set(WITH_OPENCLAMDFFT OFF)
+set(WITH_IPP OFF)
+set(WITH_INTELPERC OFF)
+set(WITH_IPP_A OFF)
+
+# 图像格式支持
+set(WITH_PNG ON)
+set(WITH_JPEG ON)
+set(WITH_TIFF OFF)
+set(WITH_WEBP OFF)
+set(WITH_OPENEXR OFF)
+set(WITH_JASPER OFF)
+set(WITH_OPENJPEG OFF)
+set(BUILD_PNG OFF)
+set(BUILD_JPEG OFF)
+set(BUILD_TIFF OFF)
+set(BUILD_WEBP OFF)
+set(BUILD_OPENEXR OFF)
+set(BUILD_JASPER OFF)
+set(BUILD_OPENJPEG OFF)
+
+# 视频支持配置
+set(WITH_V4L ON)
+set(WITH_LIBV4L OFF)
+set(WITH_FFMPEG OFF)
+set(WITH_GSTREAMER OFF)
+
+# GUI 支持配置（嵌入式无桌面环境，全部关闭）
+set(WITH_GTK OFF)
+set(WITH_GTK_2_X OFF)
+set(WITH_QT OFF)
+set(WITH_WIN32UI OFF)
+set(HIGHGUI_ENABLE_PLUGINS OFF)
+
+# 并行计算和数学库
+set(WITH_TBB OFF)
+set(WITH_OPENMP OFF)
+set(WITH_EIGEN OFF)
+set(WITH_LAPACK OFF)
+set(WITH_PROTOBUF OFF)
+set(WITH_PTHREADS_PF ON)
+
+# 工业相机和采集卡接口（全部关闭）
+set(WITH_1394 OFF)
+set(WITH_GIGEAPI OFF)
+set(WITH_PVAPI OFF)
+set(WITH_XIMEA OFF)
+
+# 其他外部库和接口（全部关闭）
+set(WITH_CLP OFF)
+set(WITH_GDAL OFF)
+set(WITH_GPHOTO2 OFF)
+set(WITH_MATLAB OFF)
+set(WITH_OPENNI OFF)
+set(WITH_OPENNI2 OFF)
+set(WITH_VTK OFF)
+set(WITH_XINE OFF)
+
+# 非 Linux 平台支持（全部关闭）
+set(WITH_AVFOUNDATION OFF)
+set(WITH_CARBON OFF)
+set(WITH_QUICKTIME OFF)
+set(WITH_CSTRIPES OFF)
+set(WITH_DSHOW OFF)
+set(WITH_MSMF OFF)
+set(WITH_VFW OFF)
+set(WITH_VIDEOINPUT OFF)
+set(WITH_WIN32UI OFF)
+set(ANDROID OFF)
+set(BUILD_ANDROID_CAMERA_WRAPPER OFF)
+set(BUILD_ANDROID_EXAMPLES OFF)
+set(BUILD_ANDROID_SERVICE OFF)
+set(BUILD_FAT_JAVA_LIB OFF)
+set(WITH_ANDROID_CAMERA OFF)
+
+# 语言绑定配置
+set(BUILD_opencv_python2 OFF)
+set(BUILD_opencv_java OFF)
+set(BUILD_opencv_js OFF)
