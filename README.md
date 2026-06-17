@@ -1,3 +1,14 @@
+## 编译说明
+
+```shell
+# 下载contrib到当前路径下
+wget https://github.com/opencv/opencv_contrib/archive/4.10.0.tar.gz
+tar -xzf 4.10.0.tar.gz
+```
+修改 build.sh内的 PATH_ROOTFS 指向要使用的rootfs
+
+
+
 ## OpenCV: Open Source Computer Vision Library
 
 

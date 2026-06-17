@@ -3,12 +3,18 @@
 # 指定交叉编译器路径
 PATH="/opt/toolchain/Xuantie-900-gcc-linux-6.6.0-glibc-x86_64-V3.0.2/bin/:${PATH}"
 # 指定目标rootfs
-PATH_ROOTFS="/work/walnutpi-build/.tmp/rootfs-build/xcam_debian13_server"
+PATH_ROOTFS="/work/walnutpi-build/.tmp/rootfs-build/cybercam_debian13_server/"
 
 set -e
 
+# 交叉编译 pkg-config 配置：指向目标系统 rootfs 的 .pc 文件
+# PKG_CONFIG_SYSROOT_DIR: 将 .pc 文件中的路径前缀映射到 sysroot
+# PKG_CONFIG_LIBDIR: 指定 pkg-config 搜索 .pc 文件的路径（替代默认路径）
+export PKG_CONFIG_SYSROOT_DIR="${PATH_ROOTFS}"
+export PKG_CONFIG_LIBDIR="${PATH_ROOTFS}/usr/lib/riscv64-linux-gnu/pkgconfig:${PATH_ROOTFS}/usr/share/pkgconfig"
+
 OPENCV_SRC=$(pwd)
-CONTRIB_SRC=./opencv_contrib-4.10.0
+CONTRIB_SRC=$(pwd)/opencv_contrib-4.10.0
 BUILD_DIR=build
 INSTALL_DIR=$(pwd)/install
 
@@ -62,6 +68,13 @@ cmake ${OPENCV_SRC} \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_opencv_python3=ON \
+    -DOPENCV_EXTRA_MODULES_PATH=${CONTRIB_SRC}/modules \
+    -DBUILD_opencv_freetype=ON \
+    -DWITH_FREETYPE=ON \
+    -DFREETYPE_INCLUDE_DIRS="${PATH_ROOTFS}/usr/include/freetype2;${PATH_ROOTFS}/usr/include" \
+    -DFREETYPE_LIBRARIES="${PATH_ROOTFS}/usr/lib/riscv64-linux-gnu/libfreetype.so" \
+    -DHARFBUZZ_INCLUDE_DIRS="${PATH_ROOTFS}/usr/include/harfbuzz" \
+    -DHARFBUZZ_LIBRARIES="${PATH_ROOTFS}/usr/lib/riscv64-linux-gnu/libharfbuzz.so" \
     -DPYTHON3_VERSION_MAJOR=${PYTHON3_VERSION_MAJOR} \
     -DPYTHON3_VERSION_MINOR=${PYTHON3_VERSION_MINOR} \
     -DPYTHON3_EXECUTABLE=/usr/bin/python3 \

@@ -26,3 +26,5 @@ node_modules
 CMakeSettings.json
 xcuserdata/
 install/
+opencv_contrib-4.10.0/
+4.10.0.tar.gz
